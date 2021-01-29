@@ -27,8 +27,7 @@ const Layout string = `
         <h1>{{.PageTitle}}</h1>
         <h2>Hostname : {{.Hostname}}</h2>
     </body>
-</html>
-`
+</html>`
 
 func main() {
 	tmpl, err := template.New("template").Parse(Layout)
