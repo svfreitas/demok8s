@@ -32,4 +32,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: webserver:v1
+          tags: solutionregistry.azurecr.io/webserver:v1
