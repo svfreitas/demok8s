@@ -21,6 +21,7 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v1
         with:
+          registry: solutionregistry.azurecr.io
           username: ${{ secrets.AZURE_CLIENT_ID }}
           password: ${{ secrets.AZURE_CLIENT_SECRET }}
       -
@@ -31,5 +32,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: webserver:v1
-
+          tags: solutionregistry.azurecr.io/webserver:v1
