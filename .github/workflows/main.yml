@@ -31,4 +31,5 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: svfreitas/webserver:v1
+          tags: webserver:v1
+
