@@ -58,6 +58,6 @@ jobs:
           manifests/service.yml
         images: |
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ env.IMAGE_VERSION }}
-          imagepullsecrets: |
-            ${{ env.SECRET }}
+        imagepullsecrets: |
+          ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
