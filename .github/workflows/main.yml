@@ -27,7 +27,7 @@ jobs:
     
     # Container build and push to a Azure Container registry (ACR)
     - run: |
-        docker build .\manifests\Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ env.IMAGE_VERSION }}
+        docker build ./manifests/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ env.IMAGE_VERSION }}
         docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ env.IMAGE_VERSION }}
     
     # Set the target Azure Kubernetes Service (AKS) cluster. 
