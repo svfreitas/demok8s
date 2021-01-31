@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-const version = "2.0"
+const version = "1.0"
 
 type PageData struct {
 	PageTitle string
@@ -20,7 +20,7 @@ const Layout string = `
     <head>
         <style>
         h2 {text-align: center;}
-        h1 {text-align: center;background-color:blue;"}
+        h1 {text-align: center;background-color:green;"}
         </style>
     </head>
     <body>
