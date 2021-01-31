@@ -32,4 +32,15 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: solutionregistry.azurecr.io/webserver:v2
+          tags: solutionregistry.azurecr.io/webserver:v1
+      - 
+          name: 'Deploy to Azure Container Instances'
+          uses: 'azure/aci-deploy@v1'
+          with:
+            resource-group: K8sResourceGroup
+            dns-name-label: url-for-container
+            image: solutionregistry.azurecr.io/webserver:v1
+            registry-username: ${{ secrets.REGISTRY_USERNAME }}
+            registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+            name: demok8s-container
+            location: 'central us'
