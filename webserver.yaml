@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver-dep
+  labels:
+    app: webserver
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      name: webserver
+      labels:
+        app: webserver
+    spec:
+      containers:
+      - name: webserver
+        image: solutionregistry.azurecr.io/webserver:v1
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+   app: webserver
+  ports:
+   - protocol: TCP
+     port: 8080
+     targetPort: 80
