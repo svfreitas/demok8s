@@ -33,10 +33,16 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: solutionregistry.azurecr.io/webserver:v1
+    # Set the target Azure Kubernetes Service (AKS) cluster. 
+      - uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: K8sCluster
+          resource-group: K8sResourceGroup      
       - 
-          name: 'Deploy to Azure Container Instances'
-          uses: 'azure/aci-deploy@v1'
-          with:
+        name: 'Deploy to Azure Container Instances'
+        uses: 'azure/aci-deploy@v1'
+        with:
             resource-group: K8sResourceGroup
             dns-name-label: url-for-container
             image: solutionregistry.azurecr.io/webserver:v1
