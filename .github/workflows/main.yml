@@ -45,11 +45,11 @@ jobs:
     - uses: azure/k8s-create-secret@v1
       with:
         container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
-        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        container-registry-username: ${{ secrets.AZURE_CLIENT_ID }}
+        container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
         secret-name: ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
-        force: true  
+
     # Deploy app to AKS
     - uses: azure/k8s-deploy@v1
       with:
