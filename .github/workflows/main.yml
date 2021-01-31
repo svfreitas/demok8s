@@ -33,6 +33,9 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: solutionregistry.azurecr.io/webserver:v1
+      - uses: azure/login@v1
+        with:
+         creds: ${{ secrets.AZURE_CREDENTIALS }}          
     # Set the target Azure Kubernetes Service (AKS) cluster. 
       - uses: azure/aks-set-context@v1
         with:
