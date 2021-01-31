@@ -9,6 +9,7 @@ env:
   NAMESPACE: demo
   APP_NAME: webserver
   IMAGE_VERSION: v1
+  SECRET: demo-secret
 
   
 jobs:
@@ -40,6 +41,15 @@ jobs:
     - run: |
         kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
     
+    # Create image pull secret for ACR
+    - uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
+        force: true  
     # Deploy app to AKS
     - uses: azure/k8s-deploy@v1
       with:
@@ -48,6 +58,6 @@ jobs:
           manifests/service.yml
         images: |
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ env.IMAGE_VERSION }}
-        #imagepullsecrets: |
-        #  ${{ env.SECRET }}
+          imagepullsecrets: |
+          ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
