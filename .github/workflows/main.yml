@@ -7,7 +7,7 @@ env:
   CLUSTER_NAME: K8sCluster
   CLUSTER_RESOURCE_GROUP: K8sResourceGroup
   NAMESPACE: demo
- # SECRET: {secret-name}
+  SECRET: demo_secret
   APP_NAME: webserver
   
 jobs:
@@ -45,7 +45,7 @@ jobs:
         container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-       # secret-name: ${{ env.SECRET }}
+        secret-name: ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
         force: true
     
