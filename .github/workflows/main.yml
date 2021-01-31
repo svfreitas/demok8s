@@ -11,7 +11,7 @@ env:
   APP_NAME: webserver
   
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
@@ -40,13 +40,13 @@ jobs:
         kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
     
     # Create image pull secret for ACR
-    - uses: azure/k8s-create-secret@v1
-      with:
-        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
-        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        secret-name: ${{ env.SECRET }}
-        namespace: ${{ env.NAMESPACE }}
+    #- uses: azure/k8s-create-secret@v1
+    #  with:
+    #    container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+    #    container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+    #    container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+    #    secret-name: ${{ env.SECRET }}
+    #    namespace: ${{ env.NAMESPACE }}
     
     # Deploy app to AKS
     - uses: azure/k8s-deploy@v1
