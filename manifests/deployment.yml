@@ -32,10 +32,14 @@ spec:
             path: /healthz
             port: 80
           failureThreshold: 1
-          periodSeconds: 10
+          periodSeconds: 5
         startupProbe:
           httpGet:
             path: /readz
             port: 80
-          failureThreshold: 30
-          periodSeconds: 10          
+          failureThreshold:
+            
+            
+            30
+          periodSeconds: 5
+          initialDelaySeconds: 5
