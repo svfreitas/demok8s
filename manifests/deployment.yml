@@ -27,4 +27,15 @@ spec:
           requests:
             memory: "10Mi"
             cpu: "100m"        
-
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            failureThreshold: 1
+            periodSeconds: 10
+        startupProbe:
+          httpGet:
+            path: /readz
+            port: 8080
+            failureThreshold: 30
+            periodSeconds: 10          
