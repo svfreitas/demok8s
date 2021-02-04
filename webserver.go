@@ -105,7 +105,7 @@ func main() {
 		for i := 0; i < len(a); i++ {
 			a[i] = 'x'
 			if i%1024 == 0 {
-				time.Sleep(100 * time.Millisecond)
+				time.Sleep(500 * time.Millisecond)
 			}
 		}
 	})
