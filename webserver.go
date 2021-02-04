@@ -10,7 +10,7 @@ import (
 )
 
 const version = "1.0"
-const color = "yellow"
+const color = "blue"
 
 type PageData struct {
 	PageTitle string
