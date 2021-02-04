@@ -98,8 +98,11 @@ func main() {
 		mu.Unlock()
 	})
 
-	http.HandleFunc("/kill", func(w http.ResponseWriter, r *http.Request) {
-		os.Exit(1)
+	http.HandleFunc("/crash", func(w http.ResponseWriter, r *http.Request) {
+		a := make([]byte, 40*1024*1024)
+		for i := 0; i < len(a); i += 4096 {
+			a[i] = 'x'
+		}
 	})
 
 	http.ListenAndServe(":80", nil)
