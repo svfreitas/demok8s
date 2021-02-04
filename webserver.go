@@ -10,7 +10,7 @@ import (
 )
 
 const version = "1.0"
-const color = "green"
+const color = "yellow"
 
 type PageData struct {
 	PageTitle string
@@ -100,7 +100,7 @@ func main() {
 
 	http.HandleFunc("/crash", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(200)
-		w.Write([]byte(fmt.Sprintf("Allocation memory...", hostname)))
+		w.Write([]byte(fmt.Sprintf("%s Allocating memory...", hostname)))
 		a := make([]byte, 40*1024*1024)
 		for i := 0; i < len(a); i++ {
 			a[i] = 'x'
