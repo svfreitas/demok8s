@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -37,7 +38,10 @@ func main() {
 
 	started := time.Now()
 
+	var mu sync.RWMutex
+
 	healthzIsBad := false
+
 	hostname, err := os.Hostname()
 	if err != nil {
 		panic(err)
@@ -63,6 +67,7 @@ func main() {
 	})
 
 	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		mu.RLock()
 		if healthzIsBad {
 			w.WriteHeader(500)
 			w.Write([]byte(":-("))
@@ -70,6 +75,7 @@ func main() {
 			w.WriteHeader(200)
 			w.Write([]byte(":-)"))
 		}
+		mu.RUnlock()
 	})
 
 	http.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
@@ -84,6 +90,7 @@ func main() {
 	})
 
 	http.HandleFunc("/degraded", func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
 		healthzIsBad = !healthzIsBad
 		w.WriteHeader(200)
 		if healthzIsBad {
@@ -91,7 +98,11 @@ func main() {
 		} else {
 			w.Write([]byte(fmt.Sprintf("The %s container is  restored", hostname)))
 		}
+		mu.Unlock()
+	})
 
+	http.HandleFunc("/kill", func(w http.ResponseWriter, r *http.Request) {
+		os.Exit(1)
 	})
 
 	http.ListenAndServe(":80", nil)
