@@ -55,6 +55,10 @@ func main() {
 			Hostname:  hostname,
 			Color:     color,
 		}
+
+		// simulate some process time
+		time.Sleep(25 * time.Millisecond)
+
 		tmpl.Execute(w, data)
 	})
 
@@ -79,10 +83,10 @@ func main() {
 		}
 	})
 
-	http.HandleFunc("/infected", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/degraded", func(w http.ResponseWriter, r *http.Request) {
 		healthzIsBad = true
 		w.WriteHeader(200)
-		w.Write([]byte(fmt.Sprintf("The %s container was infected", hostname)))
+		w.Write([]byte(fmt.Sprintf("The %s container is  degraded", hostname)))
 
 	})
 
