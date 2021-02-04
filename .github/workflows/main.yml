@@ -16,9 +16,9 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    
-    # Connect to Azure Container registry (ACR)
+    - uses: actions/checkout@v2
+
+       # Connect to Azure Container registry (ACR)
     - uses: azure/docker-login@v1
       with:
         login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
