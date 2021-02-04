@@ -70,10 +70,10 @@ func main() {
 		mu.RLock()
 		if healthzIsBad {
 			w.WriteHeader(500)
-			w.Write([]byte(":-("))
+			w.Write([]byte("<html><h1>:-(</h1><html>"))
 		} else {
 			w.WriteHeader(200)
-			w.Write([]byte(":-)"))
+			w.Write([]byte("<html><h1>:-)</h1><html>"))
 		}
 		mu.RUnlock()
 	})
@@ -82,10 +82,10 @@ func main() {
 		duration := time.Since(started)
 		if duration.Seconds() > 5 {
 			w.WriteHeader(200)
-			w.Write([]byte("I am ready!!!"))
+			w.Write([]byte("<html><h1>I am ready!!!</h1></html>"))
 		} else {
 			w.WriteHeader(500)
-			w.Write([]byte(fmt.Sprintf("Need to wait  %v seconds", 10-duration.Seconds())))
+			w.Write([]byte(fmt.Sprintf("<html><h1>Need to wait  %v seconds</h1></html>", 10-duration.Seconds())))
 		}
 	})
 
@@ -110,5 +110,4 @@ func ResetDegradation() {
 	mu.Lock()
 	healthzIsBad = false
 	mu.Unlock()
-
 }
