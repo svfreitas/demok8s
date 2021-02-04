@@ -34,13 +34,13 @@ const Layout string = `
 </html>
 `
 
+var mu sync.RWMutex
+var healthzIsBad bool
+
 func main() {
 
 	started := time.Now()
-
-	var mu sync.RWMutex
-
-	healthzIsBad := false
+	healthzIsBad = false
 
 	hostname, err := os.Hostname()
 	if err != nil {
@@ -60,7 +60,7 @@ func main() {
 			Color:     color,
 		}
 
-		// simulate some process time
+		// simulate some process time, database access,...
 		time.Sleep(25 * time.Millisecond)
 
 		tmpl.Execute(w, data)
@@ -91,13 +91,10 @@ func main() {
 
 	http.HandleFunc("/degraded", func(w http.ResponseWriter, r *http.Request) {
 		mu.Lock()
-		healthzIsBad = !healthzIsBad
+		healthzIsBad = true
 		w.WriteHeader(200)
-		if healthzIsBad {
-			w.Write([]byte(fmt.Sprintf("The %s container is  degraded", hostname)))
-		} else {
-			w.Write([]byte(fmt.Sprintf("The %s container is  restored", hostname)))
-		}
+		w.Write([]byte(fmt.Sprintf("The %s container is  degraded", hostname)))
+		go ResetDegradation()
 		mu.Unlock()
 	})
 
@@ -106,4 +103,12 @@ func main() {
 	})
 
 	http.ListenAndServe(":80", nil)
+}
+
+func ResetDegradation() {
+	time.Sleep(3 * time.Second)
+	mu.Lock()
+	healthzIsBad = false
+	mu.Unlock()
+
 }
