@@ -100,8 +100,8 @@ func main() {
 
 	http.HandleFunc("/crash", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(200)
-		w.Write([]byte(fmt.Sprintf("%s Allocating memory...", hostname)))
-		a := make([]byte, 40*1024*1024)
+		w.Write([]byte(fmt.Sprintf("The %s container is  allocating memory", hostname)))
+		a := make([]byte, 50*1024*1024)
 		for i := 0; i < len(a); i++ {
 			a[i] = 'x'
 		}
