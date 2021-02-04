@@ -74,7 +74,7 @@ func main() {
 
 	http.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
 		duration := time.Since(started)
-		if duration.Seconds() > 10 {
+		if duration.Seconds() > 5 {
 			w.WriteHeader(200)
 			w.Write([]byte("I am ready!!!"))
 		} else {
@@ -84,7 +84,7 @@ func main() {
 	})
 
 	http.HandleFunc("/degraded", func(w http.ResponseWriter, r *http.Request) {
-		healthzIsBad = true
+		healthzIsBad = !healthzIsBad
 		w.WriteHeader(200)
 		w.Write([]byte(fmt.Sprintf("The %s container is  degraded", hostname)))
 

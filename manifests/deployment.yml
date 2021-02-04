@@ -5,7 +5,7 @@ metadata:
   labels:
     app: webserver
 spec:
-  replicas: 25
+  replicas: 5
   selector:
     matchLabels:
       app: webserver
@@ -31,12 +31,12 @@ spec:
           httpGet:
             path: /healthz
             port: 80
-          failureThreshold: 1
+          failureThreshold: 2
           periodSeconds: 5
         startupProbe:
           httpGet:
-            path: /readz
+            path: /readyz
             port: 80
           failureThreshold: 30
           periodSeconds: 5
-          initialDelaySeconds: 
+          initialDelaySeconds: 5
