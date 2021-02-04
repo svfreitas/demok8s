@@ -86,7 +86,11 @@ func main() {
 	http.HandleFunc("/degraded", func(w http.ResponseWriter, r *http.Request) {
 		healthzIsBad = !healthzIsBad
 		w.WriteHeader(200)
-		w.Write([]byte(fmt.Sprintf("The %s container is  degraded", hostname)))
+		if healthzIsBad {
+			w.Write([]byte(fmt.Sprintf("The %s container is  degraded", hostname)))
+		} else {
+			w.Write([]byte(fmt.Sprintf("The %s container is  restored", hostname)))
+		}
 
 	})
 
