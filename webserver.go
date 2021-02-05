@@ -10,8 +10,8 @@ import (
 	"time"
 )
 
-const version = "9.0"
-const color = "green"
+const version = "1"
+const color = "pink"
 
 type PageData struct {
 	PageTitle string
@@ -94,7 +94,6 @@ func main() {
 		mu.Lock()
 		healthzIsBad = true
 		w.WriteHeader(200)
-		w.Write([]byte(fmt.Sprintf("The %s container is  degraded", hostname)))
 
 		query := r.URL.Query()
 		delay, present := query["recover"]
@@ -109,6 +108,7 @@ func main() {
 				recoveryDelay = 0
 			}
 		}
+		w.Write([]byte(fmt.Sprintf("The %s container is  degraded, it will be recovery in %d seconds", hostname, recoveryDelay)))
 		go ResetDegradation(recoveryDelay)
 		mu.Unlock()
 	})
