@@ -8,7 +8,7 @@ env:
   CLUSTER_RESOURCE_GROUP: K8sResourceGroup
   NAMESPACE: demo
   APP_NAME: webserver
-  IMAGE_VERSION: v4
+  IMAGE_VERSION: v5
   SECRET: demo-secret
 
   
