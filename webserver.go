@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-const version = "1.0"
-const color = "green"
+const version = "2.0"
+const color = "blue"
 
 type PageData struct {
 	PageTitle string
@@ -70,10 +70,10 @@ func main() {
 		mu.RLock()
 		if healthzIsBad {
 			w.WriteHeader(500)
-			w.Write([]byte("<html><h1>:-(</h1><html>"))
+			w.Write([]byte("<html><h1>:-((</h1></html>"))
 		} else {
 			w.WriteHeader(200)
-			w.Write([]byte("<html><h1>:-)</h1><html>"))
+			w.Write([]byte("<html><h1>:-))</h1></html>"))
 		}
 		mu.RUnlock()
 	})
