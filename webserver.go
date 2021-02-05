@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-const version = "2.0"
-const color = "blue"
+const version = "4.0"
+const color = "pink"
 
 type PageData struct {
 	PageTitle string
