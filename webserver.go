@@ -104,8 +104,8 @@ func main() {
 		a := make([]byte, 50*1024*1024)
 		for i := 0; i < len(a); i++ {
 			a[i] = 'x'
-			if i%1024 == 0 {
-				time.Sleep(500 * time.Millisecond)
+			if i%(1024*1024) == 0 {
+				time.Sleep(100 * time.Millisecond)
 			}
 		}
 	})
