@@ -5,12 +5,13 @@ import (
 	"html/template"
 	"net/http"
 	"os"
+	"strconv"
 	"sync"
 	"time"
 )
 
-const version = "7.0"
-const color = "orange"
+const version = "9.0"
+const color = "green"
 
 type PageData struct {
 	PageTitle string
@@ -94,7 +95,21 @@ func main() {
 		healthzIsBad = true
 		w.WriteHeader(200)
 		w.Write([]byte(fmt.Sprintf("The %s container is  degraded", hostname)))
-		go ResetDegradation()
+
+		query := r.URL.Query()
+		delay, present := query["recover"]
+
+		var recoveryDelay int
+
+		if !present || len(delay) == 0 {
+			recoveryDelay = 0
+		} else {
+			recoveryDelay, err = strconv.Atoi(delay[0])
+			if err != nil {
+				recoveryDelay = 0
+			}
+		}
+		go ResetDegradation(recoveryDelay)
 		mu.Unlock()
 	})
 
@@ -113,8 +128,8 @@ func main() {
 	http.ListenAndServe(":80", nil)
 }
 
-func ResetDegradation() {
-	time.Sleep(3 * time.Second)
+func ResetDegradation(delay int) {
+	time.Sleep(time.Duration(delay) * time.Second)
 	mu.Lock()
 	healthzIsBad = false
 	mu.Unlock()

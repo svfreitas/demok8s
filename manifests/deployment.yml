@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: webserver
-        image: solutionregistry.azurecr.io/webserver:v7
+        image: solutionregistry.azurecr.io/webserver:v9
         ports:
         - containerPort: 80
         resources:
